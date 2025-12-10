@@ -1,0 +1,10 @@
+javac -classpath "$CLASSPATH" *.java
+jar -cvf wordcount.jar *.class
+hadoop fs -mkdir -p wordcount
+hadoop fs -put -f input.txt wordcount/input.txt
+hadoop jar wordcount.jar driver wordcount/input.txt wordcount/output
+hadoop fs -cat wordcount/output/part-00000
+
+spark-submit main.py
+
+spark-submit main.py input.txt min_op max_op
